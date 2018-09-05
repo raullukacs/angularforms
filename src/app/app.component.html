@@ -1,20 +1,72 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="container">
+  <div class="row">
+    <div class="col-8 mx-auto">
+      <h1 class="mt-4">Demo Form</h1>
+      <form [formGroup]="demoForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <!-- Simple input -->
+          <label for="simpleInput">Simple input</label>
+          <input type="text" class="form-control" formControlName="simple_input" id="simpleInput" placeholder="Enter email">
+          <!-- Validation errors -->
+          <div *ngIf="(submitted || form.simple_input.dirty) && form.simple_input.errors">
+            <small class="form-text text-muted" *ngIf="form.simple_input.errors.required">This is required</small>
+            <small class="form-text text-muted" *ngIf="form.simple_input.errors.pattern">Input is invalid</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <!-- Select input -->
+          <label for="selectInput">Select input</label>
+          <select formControlName="select_input" id="selectInput" name="selectInput" class="form-control">
+            <option *ngFor="let o of options" [ngValue]="o.id">{{ o.label }}</option>
+          </select>
+          <!-- Validation errors -->
+          <div *ngIf="(submitted || form.select_input.dirty) && form.select_input.errors">
+            <small class="form-text text-muted" *ngIf="form.select_input.errors.required">This is required</small>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <!-- Radio group -->
+          <div class="form-check" *ngFor="let o of radioOptions">
+            <input class="form-check-input" type="radio" id="exampleRadios{{o.id}}" [value]="o.id" formControlName="radio_group">
+            <label class="form-check-label" for="exampleRadios{{o.id}}">
+              {{ o.label }}
+            </label>
+          </div>
+          <!-- Validation errors -->
+          <div *ngIf="(submitted || form.radio_group.dirty) && form.radio_group.errors">
+            <small class="form-text text-muted" *ngIf="form.radio_group.errors.required">This is required</small>
+          </div>
+        </div>
+
+
+        <div class="form-group form-check">
+          <!-- Checkbox -->
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="checkbox">
+          <label class="form-check-label" for="exampleCheck1">I aggree with this article</label>
+          <!-- Validation errors -->
+          <div *ngIf="(submitted || form.checkbox.dirty) && form.checkbox.errors">
+            <small class="form-text text-muted" *ngIf="form.checkbox.errors.required">This is required</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <!-- Multiple checkbox selection -->
+          <div class="form-check" *ngFor="let o of multipleCheckboxesOptions; let i = index" formArrayName="multiple_checkboxes">
+            <input type="checkbox" class="form-check-input" id="exampleCheckGroup{{i}}" [formControlName]="i">
+            <label class="form-check-label" for="exampleCheckGroup{{i}}">{{o.label}}</label>
+          </div>
+          <!-- Validation errors -->
+          <div *ngIf="(submitted || form.multiple_checkboxes.dirty) && !areCheckboxSelected()">
+            <small class="form-text text-muted">This is required</small>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
